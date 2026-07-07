@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Kecocokan Cinta | Creator Tegar Wiguna</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ec4899',
+                        secondary: '#8b5cf6',
+                        love: '#ef4444',
+                        soft: '#fdf2f8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-love {
+                background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            }
+            .card-shadow {
+                box-shadow: 0 10px 40px rgba(236, 72, 153, 0.25);
+            }
+            .input-style {
+                @apply w-full px-4 py-3 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all;
+            }
+            .btn-gradient {
+                background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
+                transition: all 0.3s ease;
+            }
+            .btn-gradient:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35);
+            }
+            .heart-beat {
+                animation: heartbeat 1.5s ease infinite;
+            }
+            @keyframes heartbeat {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+            }
+            .progress-bar {
+                transition: width 1.5s ease-out;
+            }
+            .logo-tw {
+                background: linear-gradient(135deg, #ec4899, #8b5cf6);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+        }
+    </style>
+
+    <!-- Meta Tag untuk Berbagi -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kalkulator Kecocokan Cinta | Creator Tegar Wiguna">
+    <meta property="og:description" content="Cek seberapa cocok nama kamu dengan dia! Hitung persentase kecocokan cinta dengan cara yang seru dan menyenangkan.">
+    <meta property="og:image" content="https://i.imgur.com/8Z7XQfL.png">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="min-h-screen bg-gradient-love flex flex-col items-center justify-center p-4 font-sans">
+    
+    <div class="w-full max-w-xl">
+        <!-- Header dengan Logo -->
+        <div class="text-center mb-6 text-white">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <!-- Logo TW -->
+                <div class="bg-white p-2 rounded-full shadow-lg">
+                    <span class="text-2xl font-extrabold logo-tw">TW</span>
+                </div>
+            </div>
+            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-2 flex items-center justify-center gap-2">
+                <i class="fa fa-heart love heart-beat"></i> Kalkulator Kecocokan Cinta
+            </h1>
+            <p class="text-pink-100">Cek seberapa cocok kamu dengan dia sekarang!</p>
+        </div>
+
+        <!-- Konten Utama -->
+        <div class="bg-white rounded-2xl p-6 md:p-8 card-shadow">
+            <!-- Form Input -->
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Nama Kamu</label>
+                    <input type="text" id="nama1" class="input-style text-lg" placeholder="Masukkan nama kamu..." required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Nama Dia</label>
+                    <input type="text" id="nama2" class="input-style text-lg" placeholder="Masukkan nama pasanganmu..." required>
+                </div>
+            </div>
+
+            <button id="hitungBtn" class="btn-gradient w-full py-3 px-6 text-white font-semibold rounded-xl text-lg">
+                <i class="fa fa-heart mr-2"></i> Lihat Kecocokan Kami
+            </button>
+
+            <!-- Hasil Perhitungan -->
+            <div id="hasil" class="hidden mt-8">
+                <div class="border-t border-pink-100 pt-6 text-center">
+                    <h3 class="text-xl font-semibold text-dark mb-4">Hasil Kecocokan</h3>
+                    
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <span id="tampilNama1" class="font-bold text-primary text-lg">Nama Kamu</span>
+                        <i class="fa fa-heart love heart-beat"></i>
+                        <span id="tampilNama2" class="font-bold text-secondary text-lg">Nama Dia</span>
+                    </div>
+
+                    <div class="text-5xl font-bold text-love mb-4">
+                        <span id="persen">0</span>%
+                    </div>
+
+                    <div class="w-full bg-gray-200 rounded-full h-4 mb-4 overflow-hidden">
+                        <div id="barPersen" class="bg-gradient-love h-4 rounded-full progress-bar" style="width: 0%"></div>
+                    </div>
+
+                    <p id="pesanHasil" class="text-gray-700 mt-4 italic"></p>
+                </div>
+
+                <!-- Tombol Bagikan WhatsApp -->
+                <div class="flex gap-2 justify-center mt-8 mb-4">
+                    <a href="https://api.whatsapp.com/send?text=Cek%20kecocokan%20cinta%20kamu%20disini:%20https://tegarwiguna18-gif.github.io/Kalkulator-Cinta/" target="_blank" rel="noopener noreferrer" class="bg-green-500 hover:bg-green-600 text-white font-medium px-6 py-3 rounded-xl shadow-md transition-all">
+                        <i class="fa fa-whatsapp mr-2"></i>Bagikan ke WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer dengan Nama Creator -->
+        <div class="text-center mt-6 text-white/90 text-sm space-y-1">
+            <p class="font-medium">Dibuat oleh: Creator Tegar Wiguna</p>
+            <p>© 2026 Kalkulator Kecocokan Cinta | Semua Hak Dilindungi</p>
+            <p class="text-xs opacity-75 mt-1">*Hasil hanya untuk hiburan semata</p>
+        </div>
+    </div>
+
+    <script>
+        const hitungBtn = document.getElementById('hitungBtn');
+        const nama1Input = document.getElementById('nama1');
+        const nama2Input = document.getElementById('nama2');
+        const hasilDiv = document.getElementById('hasil');
+
+        // Elemen hasil
+        const tampilNama1El = document.getElementById('tampilNama1');
+        const tampilNama2El = document.getElementById('tampilNama2');
+        const persenEl = document.getElementById('persen');
+        const barPersenEl = document.getElementById('barPersen');
+        const pesanHasilEl = document.getElementById('pesanHasil');
+
+        hitungBtn.addEventListener('click', hitungCinta);
+        nama1Input.addEventListener('keydown', (e) => { if(e.key === 'Enter') hitungCinta(); });
+        nama2Input.addEventListener('keydown', (e) => { if(e.key === 'Enter') hitungCinta(); });
+
+        function hitungCinta() {
+            const nama1 = nama1Input.value.trim().toLowerCase();
+            const nama2 = nama2Input.value.trim().toLowerCase();
+
+            if (!nama1 || !nama2) {
+                alert('Silakan isi kedua nama terlebih dahulu ya!');
+                return;
+            }
+
+            // Buat nilai acak namun konsisten berdasarkan gabungan nama
+            const gabungan = nama1 + nama2;
+            let hash = 0;
+            for (let i = 0; i < gabungan.length; i++) {
+                hash = gabungan.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const persen = Math.abs((hash % 80) + 20); // Hasil antara 20 - 100%
+
+            // Tampilkan hasil dengan animasi
+            hasilDiv.classList.remove('hidden');
+            tampilNama1El.textContent = nama1Input.value;
+            tampilNama2El.textContent = nama2Input.value;
+
+            // Animasi angka bertambah
+            let nilaiSekarang = 0;
+            const waktu = setInterval(() => {
+                if(nilaiSekarang >= persen) {
+                    clearInterval(waktu);
+                } else {
+                    nilaiSekarang++;
+                    persenEl.textContent = nilaiSekarang;
+                    barPersenEl.style.width = nilaiSekarang + '%';
+                }
+            }, 20);
+
+            // Pesan hasil
+            let pesan = '';
+            if (persen >= 85) pesan = "💖 Wah, sangat cocok! Kalian ditakdirkan untuk bersama, pertahankan hubungan ini ya!";
+            else if (persen >= 70) pesan = "💕 Kecocokan yang tinggi! Kalian pasangan yang serasi, teruslah saling mengerti.";
+            else if (persen >= 50) pesan = "💓 Cukup cocok! Perlu sedikit usaha dan pengertian lebih agar semakin erat.";
+            else if (persen >= 35) pesan = "💞 Masih butuh waktu! Cobalah lebih sering berkomunikasi dan saling memahami.";
+            else pesan = "💘 Takdir berjalan misterius... Jangan putus asa, pertemanan yang baik adalah awal dari segalanya!";
+
+            pesanHasilEl.textContent = pesan;
+
+            // Scroll ke hasil
+            hasilDiv.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+        }
+    </script>
+</body>
+</html>
